@@ -1,6 +1,6 @@
 # Obsidian Customizable Right Click Menu
 
-This plugin allows you to add any commands, including those of community plugins, to the right click menu and assign custom icons to them. This menu is available in Source and Live Preview mode, but not Preview mode.
+This plugin allows you to add any commands, including those of community plugins, to the right click menu and assign custom icons to them. Note that this menu is available only on the note in Source and Live Preview mode, but not Preview mode or in the sidebars.
 
 ## Custom Icons
 
