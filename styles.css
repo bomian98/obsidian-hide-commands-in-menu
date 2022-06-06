@@ -17,3 +17,7 @@
 .custom-menu-flex {
     display: flex;
 }
+
+div.custom-menu-hide-item {
+    display: none;
+}

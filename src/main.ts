@@ -1,5 +1,6 @@
-import { Command, Plugin } from 'obsidian';
+import { Command, Plugin, MenuItem } from 'obsidian';
 import CustomMenuSettingsTab, { CustomMenuSettings, DEFAULT_SETTINGS } from './ui/settingsTab';
+import { around } from 'monkey-around';
 
 export default class CustomMenuPlugin extends Plugin {
 	settings: CustomMenuSettings;
@@ -10,10 +11,42 @@ export default class CustomMenuPlugin extends Plugin {
 		await this.loadSettings();
 		this.addSettingTab(new CustomMenuSettingsTab(this.app, this));
 
-
 		this.settings.menuCommands.forEach(command => {
 			this.addMenuItem(command);
 		});
+
+		/* moneky-around doesn't know about my this.settings, need to set it here */
+		let hideTitles = this.settings.hideTitles
+
+		/* https://github.com/Panossa/mindful-obsidian/blob/master/main.ts */
+		this.register(around(MenuItem.prototype, {
+			setTitle(old) {
+				return function (title: string | DocumentFragment) {
+					this.dom.dataset.stylizerTitle = String(title);
+
+					if (hideTitles.includes(String(title))) {
+						console.log(title);
+						this.dom.addClass('custom-menu-hide-item');
+					}
+
+					return old.call(this, title);
+				};
+			}
+		}));
+
+		// this.register(around(MenuItem.prototype, {
+		// 	setIcon(old) {
+		// 		return function (icon: string | DocumentFragment) {
+		// 			this.dom.dataset.stylizerIcon = String(icon);
+
+		// 			if (icon === 'paste') {
+		// 				this.dom.addClass('custom-menu-hide-item');
+		// 			}
+
+		// 			return old.call(this, icon);
+		// 		};
+		// 	}
+		// }));
 	}
 
 	//add command to right-click menu
@@ -33,7 +66,7 @@ export default class CustomMenuPlugin extends Plugin {
 	}
 
 	hideMenuItem() {
-		
+
 	}
 
 	//add command to the list of commands to be added to right-click menu (persistent, saved in settings)
