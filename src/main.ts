@@ -26,7 +26,6 @@ export default class CustomMenuPlugin extends Plugin {
 					this.dom.dataset.stylizerTitle = String(title);
 
 					if (hideTitles.includes(String(title))) {
-						console.log(title);
 						this.dom.addClass('custom-menu-hide-item');
 					}
 
