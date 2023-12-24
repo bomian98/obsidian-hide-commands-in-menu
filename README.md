@@ -2,6 +2,8 @@
 
 This plugin allows you to add or hide any commands, including those of community plugins, to the right click menu and assign custom icons to them. Note that adding commands is available only on the note menu in Source and Live Preview mode, but not Preview mode or in the sidebars.
 
+Note: this plugin, like all my plugins, is semi-abandonded, and I may not get to any issues. If you're having problems, check out Obsidian Commander, a plugin which lets you add commands to any part of the user interface; it has the same functionality and is as of 2023 being regularly updated by the maintainers.
+
 ## Custom Icons
 
 If the command doesn't yet have an icon, you can assign one from Obsidian's internal icons and Lucide icons. You can also reassign icons for commands with preixisiting icons by clicking the "edit" button once a command has been reigstered.
