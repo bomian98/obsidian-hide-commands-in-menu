@@ -26,7 +26,7 @@ export default class CustomMenuSettingsTab extends PluginSettingTab {
         containerEl.createEl('h2', { text: 'Hide commands' });
 
         new Setting(containerEl)
-            .setDesc("Enter the names of the commands as a comma-separated list. Commands are case-sensitive. You will need to restart Obsidian for the changes to take effect.")
+            .setDesc("Enter the names of the commands as a line-separated list. One line one command. Commands are case-sensitive. You will need to restart Obsidian or reload the plugin for the changes to take effect.")
             .addTextArea(text => {
                 const onChange = async (value: string) => {
                     const list = value.split('\n').map((v) => v.trim());

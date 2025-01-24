@@ -12,7 +12,6 @@ export default class CustomMenuPlugin extends Plugin {
 		this.addSettingTab(new CustomMenuSettingsTab(this.app, this));
 
 		let hideTitles = this.settings.hideTitles
-		// console.log("hideTitles", hideTitles)
 
 		this.register(around(MenuItem.prototype, {
 			setTitle(old) {
