@@ -1,25 +1,35 @@
-# Obsidian Customizable Right Click Menu
+# Obsidian Hide Commands in Menus
 
-This plugin allows you to hide any commands, including those of community plugins. 
-
-Note: this plugin, like all my plugins, is semi-abandonded.
+This plugin allows you to hide any commands, including those of community plugins.
 
 ## Prerequisite
 
-Before using this plugin, ensure you have disable "Native menus" in Obsidian's Appearance settings.
+Before using this plugin, ensure you have disable "Native menus" in Obsidian's Appearance settings!
 
-## Remove Commands
+## Hide Commands
 
-Add the name of the command to hide exactly as it appears in the Obsidian menu. Note that this setting will remove *all* instances of a command with that name from all context menus across Obsidian (note menu, file explorer menu, etc), not just the in-note menu. 
+You can customize to hide any commands across various interface menus in Obsidian through configuration.
 
-Unlike kzhovn's [obsidian-customizable-menu](https://github.com/kzhovn/obsidian-customizable-menu), this implementation requires commands to be entered line-by-line rather than using comma separation, ensuring better readability.
+There are some differentiators from kzhovn's [obsidian-customizable-menu](https://github.com/kzhovn/obsidian-customizable-menu):
 
-If you would like to style the listed commands yourself, instead of simply removing them, the selector is `div.custom-menu-hide-item`.
+1. Hiding commands across multiple menus - This plugin allows you to hide commands across various interface menus in Obsidian, including file-menu, files-menu, editor-menu, and url-menu.
+2. Intelligent Separator Management - Command hiding operations automatically trigger an intelligent cleanup mechanism for redundant separators.
+3. Structured Rule Configuration - Utilizes line-by-line entry format instead of comma separation, significantly improving rule readability.
+
+If you would like to style the listed commands yourself, instead of simply removing them, the selector is `div.custom-menu-hide-item`. And if you want to style the hiding separators, the selector is `div.custom-menu-hide-separator`.
 
 ## Development Roadmap
 
-- [ ] Develop remove commands across multiple menus.
-- [ ] Hide redundant menu separators when all enclosed commands are hidden for cleaner UI.
+- [ ] Develop hide commands across multiple menus.
+  - [x] file-menu
+    - [x] tab-header position
+    - [x] more-options position
+    - [x] file-explorer position
+  - [ ] files-menu
+  - [x] editor-menu
+  - [ ] url-menu
+- [x] Hide redundant menu separators when all enclosed commands are hidden for cleaner UI.
+- [ ] Regex support.
 
 ## Thanks
 
