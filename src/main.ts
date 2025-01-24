@@ -1,36 +1,59 @@
-import { Plugin, MenuItem } from 'obsidian';
-import CustomMenuSettingsTab, { CustomMenuSettings, DEFAULT_SETTINGS } from './ui/settingsTab';
-import { around } from 'monkey-around';
+import { Plugin, MenuItem, Menu } from "obsidian";
+import CustomMenuSettingsTab, {
+  CustomMenuSettings,
+  DEFAULT_SETTINGS,
+} from "./ui/settingsTab";
+import { around } from "monkey-around";
+import { hideMenuItems } from "./utils";
 
 export default class CustomMenuPlugin extends Plugin {
-	settings: CustomMenuSettings;
+  settings: CustomMenuSettings;
 
-	async onload() {
-		console.log('Loading customizable menu');
+  async onload() {
+    console.log("Loading customizable menu");
 
-		await this.loadSettings();
-		this.addSettingTab(new CustomMenuSettingsTab(this.app, this));
+    await this.loadSettings();
+    this.addSettingTab(new CustomMenuSettingsTab(this.app, this));
 
-		let hideTitles = this.settings.hideTitles
+    const {
+      fileMenu: { tabHeader, moreOptions, fileExplorerContextMenu },
+      editorMenu: { editorContextMenu },
+      delayTime,
+    } = this.settings;
 
-		this.register(around(MenuItem.prototype, {
-			setTitle(old) {
-				return function (title: string | DocumentFragment) {
-					this.dom.dataset.stylizerTitle = String(title);
-					if (hideTitles.includes(String(title))) {
-						this.dom.addClass('custom-menu-hide-item');
-					}
-					return old.call(this, title);
-				};
-			}
-		}));
-	}
+    const menuPositionMapping: Record<string, string[]> = {
+      "tab-header": tabHeader,
+      "more-options": moreOptions,
+      "file-explorer-context-menu": fileExplorerContextMenu,
+      "editor-menu": editorContextMenu,
+    };
 
-	async loadSettings() {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-	}
+    this.registerDomEvent(document.body, "contextmenu", (ev) => {
+      setTimeout(() => hideMenuItems(menuPositionMapping), delayTime);
+    });
 
-	async saveSettings() {
-		await this.saveData(this.settings);
-	}
+    this.registerDomEvent(document.body, "click", (ev) => {
+      setTimeout(() => hideMenuItems(menuPositionMapping), delayTime);
+    });
+
+    this.registerEvent(
+      this.app.workspace.on("file-menu", (menu, file, source) => {
+        (menu as any).dom.addClass(source);
+      })
+    );
+
+    this.registerEvent(
+      this.app.workspace.on("editor-menu", (menu) => {
+        (menu as any).dom.addClass("editor-menu");
+      })
+    );
+  }
+
+  async loadSettings() {
+    this.settings = { ...DEFAULT_SETTINGS, ...(await this.loadData()) };
+  }
+
+  async saveSettings() {
+    await this.saveData(this.settings);
+  }
 }
