@@ -3,8 +3,9 @@
 	"name": "Hide Commands in Menu",
 	"version": "0.1.0",
 	"minAppVersion": "1.7.2",
-	"description": "Allows you to hide any command to Obsidian's menu.",
+	"description": "Allows you to hide any command to different menu.",
 	"author": "bomian98",
 	"authorUrl": "https://github.com/bomian98/",
+	"repo": "bomian98/obsidian-hide-commands-in-menu",
 	"isDesktopOnly": false
 }

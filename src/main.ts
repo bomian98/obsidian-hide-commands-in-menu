@@ -8,7 +8,7 @@ export default class HidingCommandPlugin extends Plugin {
   settings: HidingCommandSettings;
 
   async onload() {
-    console.log('Loading Hide Commands in Menu');
+    console.log('Loading Hide-Commands-in-Menu');
 
     await this.loadSettings();
     this.addSettingTab(new HidingCommandSettingsTab(this.app, this));
