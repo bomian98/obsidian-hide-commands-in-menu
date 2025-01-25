@@ -1,41 +1,69 @@
-# Obsidian Hide Commands in Menus
+# 🕶️ Obsidian Hide Commands in Menus
 
 This plugin allows you to hide any commands, including those of community plugins.
 
 ## Prerequisite
 
-Before using this plugin, ensure you have disable "Native menus" in Obsidian's Appearance settings!
+Before using this plugin, ensure you have **disable "Native menus"** in Obsidian's Appearance settings!
 
-## Hide Commands
+## Features
 
-You can customize to hide any commands across various interface menus in Obsidian through configuration.
+- Hiding different commands across various menus in Obsidian.
+- Auto-removes redundant dividers when commands are hidden.
+- Different CSS class injection for menu styling control.
+- Regex pattern matching for advanced rule configurations.
 
-There are some differentiators from kzhovn's [obsidian-customizable-menu](https://github.com/kzhovn/obsidian-customizable-menu):
+## Menu Types
 
-1. Different hiding mechanism - You can configure different commands to be hidden for different menus, including file-menu, files-menu, editor-menu, and url-menu.
+![](resources/menu-positions.png)
 
-2. Intelligent Separator Management - Command hiding operations automatically trigger an intelligent cleanup mechanism for redundant separators.
+| Menu Type                  | Trigger Location                    |
+| -------------------------- | ----------------------------------- |
+| file-menu (tab-header)     | Right-click file tab                |
+| file-menu (more-options)   | Click workspace ··· button          |
+| file-menu (file-explorer)  | Right-click file/folder in explorer |
+| file-menu (link)           | Right-click internal link           |
+| files-menu (file-explorer) | Right-click multiple explorer items |
+| editor-menu                | Right-click in editor view          |
+| url-menu                   | Right-click external link           |
+| other-menu                 | Any other menu                      |
 
-3. Structured Rule Configuration - Utilizes line-by-line entry format instead of comma separation, significantly improving rule readability.
+> **Note**:
+>
+> When in the editor view, right-clicking a link will also trigger either the `url-menu` or `file-menu (link)`.
+>
+> To examine the displayed menu, utilize Obsidian's Developer Tools to inspect the menu's HTML class.
 
-If you would like to style the listed commands yourself, instead of simply removing them, the selector is `div.custom-menu-hide-item`. And if you want to style the hiding separators, the selector is `div.custom-menu-hide-separator`.
+## Customize Styles
+
+- select hide-commands: `div.custom-menu-hide-item`
+- select hide-separators: `div.custom-menu-hide-separator`
+- select different menus:
+
+| Menu Type                  | CSS Selector                             |
+| -------------------------- | ---------------------------------------- |
+| file-menu (tab-header)     | `.file-menu-tab-header`                  |
+| file-menu (more-options)   | `.file-menu-more-options`                |
+| file-menu (file-explorer)  | `.file-menu-file-explorer-context-menu`  |
+| file-menu (link)           | `.file-menu-link-context-menu`           |
+| files-menu (file-explorer) | `.files-menu-file-explorer-context-menu` |
+| editor-menu                | `.editor-menu`                           |
+| url-menu                   | `.url-menu`                              |
+| other-menu                 | `[class="menu"]`                         |
 
 ## Development Roadmap
 
 - [x] Develop hide commands across multiple menus.
-  - [x] file-menu
-    - [x] tab-header source
-    - [x] more-options source
-    - [x] file-explorer source
-    - [x] link source
-  - [x] files-menu
-    - [x] file-explorer source
-  - [x] editor-menu
-  - [x] url-menu
-- [x] Hide redundant menu separators when all enclosed commands are hidden for cleaner UI.
+- [x] Hide redundant separators when all enclosed commands are hidden.
 - [x] Regex support.
 - [ ] Multi language support.
+
+## Contributing
+
+If you have any suggestions, feature requests, or bugs to report, feel free to open an issue or submit a pull request.
 
 ## Thanks
 
 This plugin was initially a fork of kzhovn's excellent [obsidian-customizable-menu](https://github.com/kzhovn/obsidian-customizable-menu).
+
+Enjoy a cleaner Obsidian experience! 🚀
