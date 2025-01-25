@@ -1,6 +1,6 @@
 {
-  "name": "customizable-menu",
-  "version": "2.2.0",
+  "name": "hide-commands-in-menu",
+  "version": "0.1.0",
   "description": "This plugin allows you to add any command to Obsidian's right-click menu.",
   "main": "main.js",
   "scripts": {

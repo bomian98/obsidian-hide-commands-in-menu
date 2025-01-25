@@ -1,5 +1,5 @@
 import { PluginSettingTab, App, Setting, debounce, Notice } from "obsidian";
-import CustomMenuPlugin from "src/main";
+import HidingCommandPlugin from "src/main";
 
 export interface FileMenu {
   tabHeader: string[];
@@ -11,13 +11,13 @@ export interface EditorMenu {
   editorContextMenu: string[];
 }
 
-export interface CustomMenuSettings {
+export interface HidingCommandSettings {
   fileMenu: FileMenu;
   editorMenu: EditorMenu;
   delayTime: number;
 }
 
-export const DEFAULT_SETTINGS: CustomMenuSettings = {
+export const DEFAULT_SETTINGS: HidingCommandSettings = {
   fileMenu: {
     tabHeader: [],
     moreOptions: [],
@@ -29,10 +29,10 @@ export const DEFAULT_SETTINGS: CustomMenuSettings = {
   delayTime: 1,
 };
 
-export default class CustomMenuSettingsTab extends PluginSettingTab {
-  plugin: CustomMenuPlugin;
+export default class HidingCommandSettingsTab extends PluginSettingTab {
+  plugin: HidingCommandPlugin;
 
-  constructor(app: App, plugin: CustomMenuPlugin) {
+  constructor(app: App, plugin: HidingCommandPlugin) {
     super(app, plugin);
     this.plugin = plugin;
   }

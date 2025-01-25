@@ -1,19 +1,19 @@
 import { Plugin, MenuItem, Menu } from "obsidian";
-import CustomMenuSettingsTab, {
-  CustomMenuSettings,
+import HidingCommandSettingsTab, {
+  HidingCommandSettings,
   DEFAULT_SETTINGS,
 } from "./ui/settingsTab";
 import { around } from "monkey-around";
 import { hideMenuItems } from "./utils";
 
-export default class CustomMenuPlugin extends Plugin {
-  settings: CustomMenuSettings;
+export default class HidingCommandPlugin extends Plugin {
+  settings: HidingCommandSettings;
 
   async onload() {
-    console.log("Loading customizable menu");
+    console.log("Loading Hide Commands in Menu");
 
     await this.loadSettings();
-    this.addSettingTab(new CustomMenuSettingsTab(this.app, this));
+    this.addSettingTab(new HidingCommandSettingsTab(this.app, this));
 
     const {
       fileMenu: { tabHeader, moreOptions, fileExplorerContextMenu },
