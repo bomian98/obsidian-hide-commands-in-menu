@@ -36,9 +36,6 @@ export default class HidingCommandSettingsTab extends PluginSettingTab {
     const { settings } = this.plugin;
     containerEl.empty();
     containerEl.addClass('hide-commands-settings');
-
-    // 标题和描述
-    containerEl.createEl('h2', { text: 'Command Hiding Settings' });
     containerEl.createEl('div', {
       text: 'Enter command names as a line-separated list (one command per line). Commands are case-sensitive. Changes will take effect after restarting Obsidian or reloading the plugin.',
     });
