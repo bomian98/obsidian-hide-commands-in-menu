@@ -1,6 +1,5 @@
-import { Plugin, MenuItem, Menu } from 'obsidian';
+import { Plugin } from 'obsidian';
 import HidingCommandSettingsTab, { DEFAULT_SETTINGS } from './ui/settingsTab';
-import { around } from 'monkey-around';
 import { hideMenuItems } from './utils';
 import { HideCommands, HidingCommandSettings, MouseEvent } from './types';
 
