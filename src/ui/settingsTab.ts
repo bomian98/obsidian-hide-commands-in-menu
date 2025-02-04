@@ -40,7 +40,6 @@ export default class HidingCommandSettingsTab extends PluginSettingTab {
       text: 'Enter command names as a line-separated list (one command per line). Commands are case-sensitive. Changes will take effect after restarting Obsidian or reloading the plugin.',
     });
 
-    // 创建设置项
     this.createMenuSettings(
       containerEl,
       'File Menu (Tab Header)',
@@ -92,11 +91,11 @@ export default class HidingCommandSettingsTab extends PluginSettingTab {
   }
 
   /**
-   * 创建菜单设置项
-   * @param parentEl - 父元素
-   * @param title - 菜单标题
-   * @param commands - 菜单命令配置
-   * @param description - 菜单描述
+   * Create specific menu settings
+   * @param parentEl - Parent element
+   * @param title - Menu title
+   * @param commands - Menu commands configuration
+   * @param description - Menu description
    */
   private createMenuSettings(
     parentEl: HTMLElement,
@@ -111,7 +110,7 @@ export default class HidingCommandSettingsTab extends PluginSettingTab {
       cls: 'hide-commands-detail-description',
     });
 
-    // 创建纯文本设置项
+    // Create plain text settings
     createTextAreaSetting(
       detailsEl,
       'Enter commands to hide (plain text format)',
@@ -123,7 +122,7 @@ export default class HidingCommandSettingsTab extends PluginSettingTab {
       }
     );
 
-    // 创建正则表达式设置项
+    // Create regex settings
     createTextAreaSetting(
       detailsEl,
       'Enter commands to hide (regex format)',
@@ -133,20 +132,20 @@ export default class HidingCommandSettingsTab extends PluginSettingTab {
         commands.regexTexts = parseCmdString(value);
         await this.plugin.saveSettings();
       },
-      3 // 设置行数为 3
+      3 // Set rows to 3
     );
   }
 }
 
 /**
- * 创建文本区域设置项
- * @param parentEl - 父元素
- * @param name - 设置项名称
- * @param placeholder - 占位符文本
- * @param value - 初始值
- * @param onChange - 值变化时的回调
- * @param rows - 行数（默认 8）
- * @param cols - 列数（默认 30）
+ * Create textarea setting
+ * @param parentEl - Parent element
+ * @param name - Setting name
+ * @param placeholder - Placeholder text
+ * @param value - Initial value
+ * @param onChange - Callback when value changes
+ * @param rows - Number of rows (default 8)
+ * @param cols - Number of columns (default 30)
  */
 function createTextAreaSetting(
   parentEl: HTMLElement,
@@ -168,9 +167,9 @@ function createTextAreaSetting(
 }
 
 /**
- * 解析命令字符串
- * @param commands - 命令字符串
- * @returns 解析后的命令数组
+ * Parse command string
+ * @param commands - Command string
+ * @returns Parsed command array
  */
 function parseCmdString(commands: string): string[] {
   return commands

@@ -1,11 +1,11 @@
 import { HideCommands } from './types';
 
 /**
- * 检查是否需要隐藏分隔符
- * @param children - 子元素数组
- * @param startIndex - 起始索引
- * @param endIndex - 结束索引
- * @returns 是否需要隐藏分隔符
+ * Check if the separator needs to be hidden
+ * @param children - Array of child elements
+ * @param startIndex - Start index
+ * @param endIndex - End index
+ * @returns Whether the separator should be hidden
  */
 function shouldHideSeparator(
   children: Element[],
@@ -21,15 +21,15 @@ function shouldHideSeparator(
 }
 
 /**
- * 计算菜单的显示位置
- * @param clickX - 点击的 X 坐标
- * @param clickY - 点击的 Y 坐标
- * @param menuWidth - 菜单的宽度
- * @param menuHeight - 菜单的高度
- * @param containerWidth - 容器的宽度
- * @param containerHeight - 容器的高度
- * @param padding - 冗余间距（默认为 2px）
- * @returns 菜单的 left 和 top 坐标
+ * Calculate the display position of the menu
+ * @param clickX - X coordinate of the click
+ * @param clickY - Y coordinate of the click
+ * @param menuWidth - Width of the menu
+ * @param menuHeight - Height of the menu
+ * @param containerWidth - Width of the container
+ * @param containerHeight - Height of the container
+ * @param padding - Redundant padding (default 2px)
+ * @returns Left and top coordinates of the menu
  */
 function calculateMenuPositionWithPadding(
   clickX: number,
@@ -58,9 +58,9 @@ function calculateMenuPositionWithPadding(
 }
 
 /**
- * 定位菜单并隐藏指定的菜单项
- * @param menuHideCommands - 隐藏命令配置
- * @param ev - 鼠标事件
+ * Position the menu and hide specified menu items
+ * @param menuHideCommands - Hide commands configuration
+ * @param ev - Mouse event
  */
 export function hideMenuItems(
   menuHideCommands: Record<string, HideCommands>,
@@ -79,13 +79,13 @@ export function hideMenuItems(
   ) as HTMLElement;
   if (!menu || !menuContainer) return;
 
-  // 获取菜单的类名
+  // Get menu class names
   const menuClasses = Array.from(menu.classList).filter(
     (className) => menuHideCommands[className]
   );
   if (!menuClasses.length) menuClasses.push('other-menu');
 
-  // 提取 plainTexts 和 regexTexts
+  // Extract plainTexts and regexTexts
   const plainTexts = menuClasses.flatMap(
     (className) => menuHideCommands[className].plainTexts
   );
@@ -95,7 +95,7 @@ export function hideMenuItems(
     ),
   ].map((regexStr) => new RegExp(regexStr));
 
-  // 处理菜单项和分隔符的隐藏逻辑
+  // Handle menu items and separators hiding logic
   const children = Array.from(menuContainer.children);
   const totalChildren = children.length;
   let lastSeparatorIdx = -1;
@@ -120,12 +120,12 @@ export function hideMenuItems(
     }
   });
 
-  // 处理最后一个分隔符
+  // Handle the last separator
   if (shouldHideSeparator(children, lastSeparatorIdx, totalChildren)) {
     children[lastSeparatorIdx].classList.add('custom-menu-hide-separator');
   }
 
-  // 计算菜单位置并设置样式
+  // Calculate menu position and set styles
   const { offsetHeight: menuHeight, offsetWidth: menuWidth } = menu;
   const { left, top } = calculateMenuPositionWithPadding(
     clickX,
