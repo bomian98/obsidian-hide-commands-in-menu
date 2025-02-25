@@ -1,4 +1,4 @@
-# 🕶️ Obsidian Hide Commands in Menus
+# 🕶️ Hide Commands in Menus
 
 This plugin allows you to hide any commands, including those from community plugins.
 

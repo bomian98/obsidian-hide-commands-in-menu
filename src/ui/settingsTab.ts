@@ -42,49 +42,49 @@ export default class HidingCommandSettingsTab extends PluginSettingTab {
 
     this.createMenuSettings(
       containerEl,
-      'File Menu (Tab Header)',
+      'File menu (tab header)',
       settings.fileMenu.tabHeader,
       'Hide commands from the file menu when right-clicking on the tab header.'
     );
     this.createMenuSettings(
       containerEl,
-      'File Menu (More Options)',
+      'File menu (more options)',
       settings.fileMenu.moreOptions,
       'Hide commands from the file menu when clicking the "More Options" button.'
     );
     this.createMenuSettings(
       containerEl,
-      'File Menu (File Explorer)',
+      'File menu (file explorer)',
       settings.fileMenu.fileExplorerContext,
       'Hide commands from the file menu when right-clicking on a file or folder in the file explorer.'
     );
     this.createMenuSettings(
       containerEl,
-      'File Menu (Link Context)',
+      'File menu (link context)',
       settings.fileMenu.linkContext,
       'Hide commands from the file menu when right-clicking on a file link.'
     );
     this.createMenuSettings(
       containerEl,
-      'Files Menu (File Explorer)',
+      'Files menu (file explorer)',
       settings.filesMenu.fileExplorerContext,
       'Hide commands from the files menu when right-clicking on files or folders in the file explorer.'
     );
     this.createMenuSettings(
       containerEl,
-      'Editor Menu',
+      'Editor menu',
       settings.editorMenu,
       'Hide commands from the editor menu when right-clicking in the editor view.'
     );
     this.createMenuSettings(
       containerEl,
-      'URL Menu',
+      'URL menu',
       settings.urlMenu,
       'Hide commands from the URL menu when right-clicking on an external URL.'
     );
     this.createMenuSettings(
       containerEl,
-      'Other Menus',
+      'Other menus',
       settings.otherMenu,
       'Hide commands from additional menus not covered above.'
     );
