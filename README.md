@@ -58,7 +58,9 @@ To examine the displayed menu, utilize Obsidian's Developer Tools to inspect the
 
 ## Contributing
 
-We welcome contributions! Please feel free to submit issues or pull requests.
+The settingTab UI of this plugin is not good. It would be my pleasure if someone can give suggestions for improvement.
+
+Suggestions for other issues of this plugin are also welcome!
 
 ## License
 
