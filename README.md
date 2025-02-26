@@ -13,21 +13,6 @@ Before using this plugin, ensure you have **disabled "Native menus"** in Obsidia
 - Inject different CSS classes for menu styling control.
 - Use regex pattern matching for advanced rule configurations.
 
-## Installation
-
-There are two ways to install the plugin before it is officially published by Obsidian:
-
-### Install by Downloading Release
-
-1. Download the latest release from the [GitHub releases page](https://github.com/bomian98/obsidian-hide-commands-in-menu/releases).
-2. Unzip the zip file into your Obsidian plugins folder (default location: `VaultPath/.obsidian/plugins`).
-
-### Install via BRAT Plugin
-
-1. After installing BRAT plugin, click "Add Beta plugin" in the BRAT settings.
-2. Enter the following URL: `https://github.com/bomian98/obsidian-hide-commands-in-menu`.
-3. Click "Add Plugin". Wait a few seconds for the plugin to install, and you can use it directly.
-
 ## Menu Types
 
 ![Menu Types](resources/menu-positions.png)
