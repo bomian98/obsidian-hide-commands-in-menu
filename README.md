@@ -1,17 +1,73 @@
-# Obsidian Customizable Right Click Menu
+# 🕶️ Hide Commands in Menus
 
-This plugin allows you to add or hide any commands, including those of community plugins, to the right click menu and assign custom icons to them. Note that adding commands is available only on the note menu in Source and Live Preview mode, but not Preview mode or in the sidebars.
+This plugin allows you to hide any commands, including those from community plugins.
 
-Note: this plugin, like all my plugins, is semi-abandonded, and I may not get to any issues. If you're having problems, check out Obsidian Commander, a plugin which lets you add commands to any part of the user interface; it has the same functionality and is as of 2023 being regularly updated by the maintainers.
+## Prerequisite
 
-## Custom Icons
+Before using this plugin, ensure you have **disabled "Native menus"** in Obsidian's Appearance settings!
 
-If the command doesn't yet have an icon, you can assign one from Obsidian's internal icons and Lucide icons. You can also reassign icons for commands with preixisiting icons by clicking the "edit" button once a command has been reigstered.
+## Features
 
-## Remove Commands
-Add the name of the command to hide exactly as it appears in the Obsidian menu. Note that this setting will remove *all* instances of a command with that name from all context menus across Obsidian (note menu, file explorer menu, etc), not just the in-note menu. This means that in cases where a command with the same name appears in several different menus (for instance, "Open in default app" in both the file explorer menu and the note menu), it is currently impossible to hide just one of them.
+- Hide different commands across various menus in Obsidian.
+- Automatically remove redundant dividers when commands are hidden.
+- Inject different CSS classes for menu styling control.
+- Use regex pattern matching for advanced rule configurations.
 
-If you would like to style the listed commands yourself, instead of simply removing them, the selector is `div.custom-menu-hide-item`.
+## Menu Types
+
+![Menu Types](resources/menu-positions.png)
+
+| Menu Type                  | Trigger Location                    |
+| -------------------------- | ----------------------------------- |
+| file-menu (tab-header)     | Right-click file tab                |
+| file-menu (more-options)   | Click workspace ··· button          |
+| file-menu (file-explorer)  | Right-click file/folder in explorer |
+| file-menu (link)           | Right-click internal link           |
+| files-menu (file-explorer) | Right-click multiple explorer items |
+| editor-menu                | Right-click in editor view          |
+| url-menu                   | Right-click external link           |
+| other-menu                 | Any other menu                      |
+
+> **Note**: When in the editor view, right-clicking a link will also trigger either the `url-menu` or `file-menu (link)`.
+
+To examine the displayed menu, utilize Obsidian's Developer Tools to inspect the menu's HTML class.
+
+## Customize Styles
+
+- Select hide-commands: `div.custom-menu-hide-item`
+- Select hide-separators: `div.custom-menu-hide-separator`
+- Select different menus:
+
+| Menu Type                  | CSS Selector                             |
+| -------------------------- | ---------------------------------------- |
+| file-menu (tab-header)     | `.file-menu-tab-header`                  |
+| file-menu (more-options)   | `.file-menu-more-options`                |
+| file-menu (file-explorer)  | `.file-menu-file-explorer-context-menu`  |
+| file-menu (link)           | `.file-menu-link-context-menu`           |
+| files-menu (file-explorer) | `.files-menu-file-explorer-context-menu` |
+| editor-menu                | `.editor-menu`                           |
+| url-menu                   | `.url-menu`                              |
+| other-menu                 | `[class="menu"]`                         |
+
+## Development Roadmap
+
+- [x] Develop hide commands across multiple menus.
+- [x] Hide redundant separators when all enclosed commands are hidden.
+- [x] Regex support.
+- [ ] Multi-language support.
+
+## Contributing
+
+The settingTab UI of this plugin is not good. It would be my pleasure if someone can give suggestions for improvement.
+
+Suggestions for other issues of this plugin are also welcome!
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Thanks
-This plugin was initially a fork of phibr0's excellent [customizable sidebar](https://github.com/phibr0/obsidian-customizable-sidebar), and still uses many elements from it. The code for hiding menu items comes in part from Panossa's [Mindful Obsidian](https://github.com/Panossa/mindful-obsidian/blob/master/main.ts)
+
+This plugin was initially a fork of kzhovn's excellent [obsidian-customizable-menu](https://github.com/kzhovn/obsidian-customizable-menu).
+
+Enjoy a cleaner Obsidian experience! 🚀

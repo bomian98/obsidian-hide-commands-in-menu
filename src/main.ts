@@ -1,70 +1,78 @@
-import { Command, Plugin, MenuItem } from 'obsidian';
-import CustomMenuSettingsTab, { CustomMenuSettings, DEFAULT_SETTINGS } from './ui/settingsTab';
-import { around } from 'monkey-around';
+import { Plugin } from 'obsidian';
+import HidingCommandSettingsTab, { DEFAULT_SETTINGS } from './ui/settingsTab';
+import { hideMenuItems } from './utils';
+import { HideCommands, HidingCommandSettings, MouseEvent } from './types';
 
-export default class CustomMenuPlugin extends Plugin {
-	settings: CustomMenuSettings;
+export default class HidingCommandPlugin extends Plugin {
+  settings: HidingCommandSettings;
 
-	async onload() {
-		console.log('Loading customizable menu');
+  async onload() {
+    console.log('Loading Hide-Commands-in-Menu');
 
-		await this.loadSettings();
-		this.addSettingTab(new CustomMenuSettingsTab(this.app, this));
+    await this.loadSettings();
+    this.addSettingTab(new HidingCommandSettingsTab(this.app, this));
 
-		this.settings.menuCommands.forEach(command => {
-			this.addMenuItem(command);
-		});
+    const menuHideCommands: Record<string, HideCommands> = {
+      'file-menu-tab-header': this.settings.fileMenu.tabHeader,
+      'file-menu-more-options': this.settings.fileMenu.moreOptions,
+      'file-menu-file-explorer-context-menu':
+        this.settings.fileMenu.fileExplorerContext,
+      'file-menu-link-context-menu': this.settings.fileMenu.linkContext,
+      'files-menu-file-explorer-context-menu':
+        this.settings.filesMenu.fileExplorerContext,
+      'editor-menu': this.settings.editorMenu,
+      'url-menu': this.settings.urlMenu,
+      'other-menu': this.settings.otherMenu,
+    };
 
-		/* moneky-around doesn't know about my this.settings, need to set it here */
-		let hideTitles = this.settings.hideTitles
+    const delayTime = this.settings.delayTime ? this.settings.delayTime : 1;
 
-		/* Hide menu items */
-		/* https://github.com/Panossa/mindful-obsidian/blob/master/main.ts */
-		this.register(around(MenuItem.prototype, {
-			setTitle(old) {
-				return function (title: string | DocumentFragment) {
-					this.dom.dataset.stylizerTitle = String(title);
+    const clickEvents: MouseEvent[] = [
+      'auxclick',
+      'contextmenu',
+      'click',
+      'dblclick',
+    ];
+    for (const event of clickEvents) {
+      this.registerDomEvent(document.body, event, (ev) => {
+        setTimeout(() => hideMenuItems(menuHideCommands, ev), delayTime);
+      });
+    }
 
-					if (hideTitles.includes(String(title))) {
-						this.dom.addClass('custom-menu-hide-item');
-					}
+    this.registerEvent(
+      this.app.workspace.on('file-menu', (menu, file, source) => {
+        // console.log('file-menu', source);
+        (menu as any).dom.addClass(`file-menu-${source}`);
+      })
+    );
 
-					return old.call(this, title);
-				};
-			}
-		}));
-	}
+    this.registerEvent(
+      this.app.workspace.on('files-menu', (menu, files, source) => {
+        // console.log('files-menu', source);
+        (menu as any).dom.addClass(`files-menu-${source}`);
+      })
+    );
 
-	//add command to right-click menu
-	addMenuItem(command: Command) {
-		this.registerEvent(
-			this.app.workspace.on("editor-menu", (menu) => {
-				menu.addItem((item) => {
-					item.setTitle(command.name)
-					.setIcon(command.icon)
-					.onClick(() => {
-						//@ts-ignore
-						this.app.commands.executeCommandById(command.id);
-					});
-				});
-			})
-		);
-	}
+    this.registerEvent(
+      this.app.workspace.on('editor-menu', (menu) => {
+        // console.log('editor-menu');
+        (menu as any).dom.addClass('editor-menu');
+      })
+    );
 
-	//add command to the list of commands to be added to right-click menu (persistent, saved in settings)
-	async addMenuItemSetting(command: Command, settingTab: CustomMenuSettingsTab) {
-		this.addMenuItem(command);
-		this.settings.menuCommands.push(command);
-		await this.saveSettings();
+    this.registerEvent(
+      this.app.workspace.on('url-menu', (menu) => {
+        // console.log('url-menu');
+        (menu as any).dom.addClass('url-menu');
+      })
+    );
+  }
 
-		settingTab.display(); //refresh settings tab
-	}
+  async loadSettings() {
+    this.settings = { ...DEFAULT_SETTINGS, ...(await this.loadData()) };
+  }
 
-	async loadSettings() {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-	}
-
-	async saveSettings() {
-		await this.saveData(this.settings);
-	}
+  async saveSettings() {
+    await this.saveData(this.settings);
+  }
 }

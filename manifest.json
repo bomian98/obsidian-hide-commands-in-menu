@@ -1,10 +1,10 @@
 {
-	"id": "customizable-menu",
-	"name": "Customizable Menu",
-	"version": "2.2.0",
-	"minAppVersion": "0.12.11",
-	"description": "Allows you to add any command to Obsidian's right-click menu.",
-	"author": "kzhovn",
-	"authorUrl": "https://github.com/kzhovn/",
+	"id": "hide-commands-in-menu",
+	"name": "Hide Commands in Menu",
+	"version": "0.1.3",
+	"minAppVersion": "1.7.2",
+	"description": "Allows you to hide any command to different menu.",
+	"author": "bomian98",
+	"authorUrl": "https://github.com/bomian98/",
 	"isDesktopOnly": false
 }

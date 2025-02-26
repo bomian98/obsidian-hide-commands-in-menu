@@ -1,23 +1,33 @@
-/*Icon Picker*/
-.custom-menu-icon {
-    transform: translateY(3px);
-    margin-right: 8px;
-}
-
-.custom-menu-icon-container{
-    display: flex;
-}
-
-.custom-menu-settings-icon {
-    height: 20px;
-    margin-right: 0.5rem;
-    transform: translateY(2px);
-}
-
-.custom-menu-flex {
-    display: flex;
-}
-
 div.custom-menu-hide-item {
-    display: none;
+  display: none;
+}
+
+div.custom-menu-hide-separator {
+  display: none;
+}
+
+.hide-commands-settings {
+  details {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+
+    summary::marker {
+      margin-right: 15px;
+    }
+
+    > div {
+      margin-left: 10px;
+    }
+
+    .hide-commands-detail-description {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+  }
+
+  details[open] {
+    border-bottom: none;
+  }
 }
