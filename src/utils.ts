@@ -73,11 +73,11 @@ export function hideMenuItems(
     container;
   const { clientX: clickX, clientY: clickY } = ev;
 
-  const menu = document.body.querySelector('.menu') as HTMLElement;
-  const menuContainer = document.body.querySelector(
-    '.menu-scroll'
-  ) as HTMLElement;
-  if (!menu || !menuContainer) return;
+  const menus = document.body.querySelectorAll('.menu');
+  const menu = menus[menus.length - 1];
+  if (!menu) return;
+  const menuContainer = menu.querySelector('.menu-scroll');
+  if (!menuContainer) return;
 
   // Get menu class names
   const menuClasses = Array.from(menu.classList).filter(
