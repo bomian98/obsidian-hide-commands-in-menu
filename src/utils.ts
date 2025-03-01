@@ -74,7 +74,7 @@ export function hideMenuItems(
   const { clientX: clickX, clientY: clickY } = ev;
 
   const menus = document.body.querySelectorAll('.menu');
-  const menu = menus[menus.length - 1];
+  const menu = menus[menus.length - 1] as HTMLElement;
   if (!menu) return;
   const menuContainer = menu.querySelector('.menu-scroll');
   if (!menuContainer) return;

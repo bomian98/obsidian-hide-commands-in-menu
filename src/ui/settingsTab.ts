@@ -88,6 +88,7 @@ export default class HidingCommandSettingsTab extends PluginSettingTab {
       settings.otherMenu,
       'Hide commands from additional menus not covered above.'
     );
+    this.createDelayTimeSetting(containerEl, settings);
   }
 
   /**
@@ -134,6 +135,39 @@ export default class HidingCommandSettingsTab extends PluginSettingTab {
       },
       3 // Set rows to 3
     );
+  }
+
+  /**
+   * Create delay time setting
+   * @param parentEl - Parent element
+   * @param settings - Plugin settings
+   */
+  private createDelayTimeSetting(
+    parentEl: HTMLElement,
+    settings: HidingCommandSettings
+  ): void {
+    let delayTime = settings.delayTime;
+    new Setting(parentEl)
+      .setHeading()
+      .setName('Delay time (microseconds)')
+      .setDesc('Delay time to process menu hiding (default 1 microsecond).')
+      .addText((text) =>
+        text.setValue(delayTime.toString()).onChange(
+          debounce(
+            async (value) => {
+              const parsedValue = parseInt(value);
+              if (isNaN(parsedValue)) {
+                delayTime = 1;
+                text.setValue(delayTime.toString());
+              }
+              settings.delayTime = parsedValue;
+              await this.plugin.saveSettings();
+            },
+            1000,
+            true
+          )
+        )
+      );
   }
 }
 
