@@ -156,8 +156,8 @@ export default class HidingCommandSettingsTab extends PluginSettingTab {
     let delayTime = settings.delayTime;
     new Setting(parentEl)
       .setHeading()
-      .setName('Delay time (microseconds)')
-      .setDesc('Delay time to process menu hiding (default 1 microsecond).')
+      .setName('Delay time (milliseconds)')
+      .setDesc('Delay time to process menu hiding (default 1 millisecond).')
       .addText((text) =>
         text.setValue(delayTime.toString()).onChange(
           debounce(

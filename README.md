@@ -32,6 +32,23 @@ Before using this plugin, ensure you have **disabled "Native menus"** in Obsidia
 
 To examine the displayed menu, utilize Obsidian's Developer Tools to inspect the menu's HTML class.
 
+## Usage
+
+Check the "Menu Types" section for the location of the menu you want to hide commands in.
+
+Then in the plugin settings, choose the menu type and enter the commands you want to hide.
+
+For "plain text format", you can enter the whole command name or part of it.
+
+For "regex format", you can use regex pattern matching.
+
+As this plugin modifies the menu item after it has been displayed, a certain delay time is required to ensure that the menu is fully rendered.
+
+The default delay time is set to 1 millisecond. If hiding does not work as intended, you can adjust this value in the plugin settings.
+
+If hiding does not work when the delay time exceeds 1 second, please report it as an issue on the GitHub repository.
+
+
 ## Customize Styles
 
 - Select hide-commands: `div.custom-menu-hide-item`
