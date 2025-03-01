@@ -38,6 +38,7 @@ export default class HidingCommandSettingsTab extends PluginSettingTab {
     containerEl.addClass('hide-commands-settings');
     containerEl.createEl('div', {
       text: 'Enter command names as a line-separated list (one command per line). Commands are case-sensitive. Changes will take effect after restarting Obsidian or reloading the plugin.',
+      cls: 'hide-commands-description',
     });
 
     this.createMenuSettings(
@@ -104,16 +105,22 @@ export default class HidingCommandSettingsTab extends PluginSettingTab {
     commands: HideCommands,
     description: string
   ): void {
-    const detailsEl = parentEl.createEl('details');
-    detailsEl.createEl('summary', { text: title });
-    detailsEl.createEl('div', {
+    // const detailsEl = parentEl.createEl('details');
+    // detailsEl.createEl('summary', { text: title });
+    // detailsEl.createEl('div', {
+    //   text: description,
+    //   cls: 'hide-commands-detail-description',
+    // });
+
+    const collapsible = createCollapsibleSection(parentEl, title, false);
+    collapsible.content.createEl('div', {
       text: description,
       cls: 'hide-commands-detail-description',
     });
 
     // Create plain text settings
     createTextAreaSetting(
-      detailsEl,
+      collapsible.content,
       'Enter commands to hide (plain text format)',
       'Enter command names (one per line)',
       commands.plainTexts,
@@ -125,7 +132,7 @@ export default class HidingCommandSettingsTab extends PluginSettingTab {
 
     // Create regex settings
     createTextAreaSetting(
-      detailsEl,
+      collapsible.content,
       'Enter commands to hide (regex format)',
       'Enter command names (one per line)',
       commands.regexTexts,
@@ -210,4 +217,31 @@ function parseCmdString(commands: string): string[] {
     .split('\n')
     .map((v) => v.trim())
     .filter((v) => v !== '');
+}
+
+
+// 修改后的 createCollapsibleSection 函数
+function createCollapsibleSection(parentEl: HTMLElement, title: string, isOpen = false) {
+  const container = parentEl.createEl('div', {
+    cls: 'hide-commands-collapsible sidebar-style'
+  });
+
+  const header = container.createEl('div', {
+    cls: 'hide-commands-collapsible-header',
+    text: title
+  });
+
+  const content = container.createEl('div', {
+    cls: 'hide-commands-collapsible-content',
+    attr: { style: `display: ${isOpen ? 'block' : 'none'};` }
+  });
+
+  // 点击事件
+  header.onclick = () => {
+    const isVisible = content.style.display === 'none';
+    content.style.display = isVisible ? 'block' : 'none';
+    container.classList.toggle('is-open', isVisible);
+  };
+
+  return { container, header, content };
 }
