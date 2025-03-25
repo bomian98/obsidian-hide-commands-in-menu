@@ -123,6 +123,16 @@ export function hideMenuItems(
   // Handle the last separator
   if (shouldHideSeparator(children, lastSeparatorIdx, totalChildren)) {
     children[lastSeparatorIdx].classList.add('custom-menu-hide-separator');
+    // Hide the separator if menu-items behind are all hidden
+    for (let i = lastSeparatorIdx - 1; i >= 0; i--) {
+      if (children[i].classList.contains('menu-item')) {
+        if (!children[i].classList.contains('custom-menu-hide-item')) {
+          break;
+        }
+      } else if (children[i].classList.contains('menu-separator')) {
+        children[i].classList.add('custom-menu-hide-separator');
+      }
+    }
   }
 
   // Calculate menu position and set styles
