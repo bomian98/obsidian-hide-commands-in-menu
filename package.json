@@ -1,6 +1,6 @@
 {
   "name": "hide-commands-in-menu",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Allows you to hide any command to different menu.",
   "main": "main.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "@rollup/plugin-node-resolve": "^11.2.1",
     "@rollup/plugin-typescript": "^8.5.0",
     "@types/node": "^14.18.63",
-    "obsidian": "^1.7.2",
+    "obsidian": "^1.8.7",
     "rollup": "^2.79.2",
     "tslib": "^2.8.1",
     "typescript": "^4.9.5"
