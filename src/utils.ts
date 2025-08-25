@@ -79,6 +79,9 @@ export function hideMenuItems(
   const menuContainer = menu.querySelector('.menu-scroll');
   if (!menuContainer) return;
 
+  // skip query toolbar menu
+  if (menu.classList.contains('query-toolbar-menu')) return;
+
   // Get menu class names
   const menuClasses = Array.from(menu.classList).filter(
     (className) => menuHideCommands[className]
@@ -94,6 +97,8 @@ export function hideMenuItems(
       menuClasses.flatMap((className) => menuHideCommands[className].regexTexts)
     ),
   ].map((regexStr) => new RegExp(regexStr));
+
+  if (plainTexts.length === 0 && regexTexts.length === 0) return;
 
   // Tracks whether any non-hidden non-separator items
   // have occured since the last separator.
