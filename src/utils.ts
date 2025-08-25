@@ -96,44 +96,50 @@ export function hideMenuItems(
   ].map((regexStr) => new RegExp(regexStr));
 
   // Handle menu items and separators hiding logic
-  const children = Array.from(menuContainer.children);
-  const totalChildren = children.length;
-  let lastSeparatorIdx = -1;
+  const visitChildrenOf = (container: Element) => {
+    const children = Array.from(container.children);
+    const totalChildren = children.length;
+    let lastSeparatorIdx = -1;
 
-  children.forEach((child, index) => {
-    if (child.classList.contains('menu-item')) {
-      const titleElement = child.querySelector('.menu-item-title');
-      const title = titleElement?.textContent?.trim();
-      if (!title) return;
+    children.forEach((child, index) => {
+      if (child.classList.contains('menu-item')) {
+        const titleElement = child.querySelector('.menu-item-title');
+        const title = titleElement?.textContent?.trim();
+        if (!title) return;
 
-      const shouldHide =
-        plainTexts.includes(title) ||
-        regexTexts.some((regex) => regex.test(title));
-      if (shouldHide) {
-        child.classList.add('custom-menu-hide-item');
-      }
-    } else if (child.classList.contains('menu-separator')) {
-      if (shouldHideSeparator(children, lastSeparatorIdx, index)) {
-        child.classList.add('custom-menu-hide-separator');
-      }
-      lastSeparatorIdx = index;
-    }
-  });
-
-  // Handle the last separator
-  if (shouldHideSeparator(children, lastSeparatorIdx, totalChildren)) {
-    children[lastSeparatorIdx].classList.add('custom-menu-hide-separator');
-    // Hide the separator if menu-items behind are all hidden
-    for (let i = lastSeparatorIdx - 1; i >= 0; i--) {
-      if (children[i].classList.contains('menu-item')) {
-        if (!children[i].classList.contains('custom-menu-hide-item')) {
-          break;
+        const shouldHide =
+          plainTexts.includes(title) ||
+          regexTexts.some((regex) => regex.test(title));
+        if (shouldHide) {
+          child.classList.add('custom-menu-hide-item');
         }
-      } else if (children[i].classList.contains('menu-separator')) {
-        children[i].classList.add('custom-menu-hide-separator');
+      } else if (child.classList.contains('menu-separator')) {
+        if (shouldHideSeparator(children, lastSeparatorIdx, index)) {
+          child.classList.add('custom-menu-hide-separator');
+        }
+        lastSeparatorIdx = index;
+      } else if (child.classList.contains("menu-group")) {
+        visitChildrenOf(child);
+      }
+    });
+
+    // Handle the last separator
+    if (shouldHideSeparator(children, lastSeparatorIdx, totalChildren)) {
+      children[lastSeparatorIdx].classList.add('custom-menu-hide-separator');
+      // Hide the separator if menu-items behind are all hidden
+      for (let i = lastSeparatorIdx - 1; i >= 0; i--) {
+        if (children[i].classList.contains('menu-item')) {
+          if (!children[i].classList.contains('custom-menu-hide-item')) {
+            break;
+          }
+        } else if (children[i].classList.contains('menu-separator')) {
+          children[i].classList.add('custom-menu-hide-separator');
+        }
       }
     }
   }
+
+  visitChildrenOf(menuContainer);
 
   // Calculate menu position and set styles
   const { offsetHeight: menuHeight, offsetWidth: menuWidth } = menu;
