@@ -1,7 +1,7 @@
 {
 	"id": "hide-commands-in-menu",
 	"name": "Hide Commands in Menu",
-	"version": "0.1.8",
+	"version": "0.1.9",
 	"minAppVersion": "1.8.7",
 	"description": "Allows you to hide any command to different menu.",
 	"author": "bomian98",
