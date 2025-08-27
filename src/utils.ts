@@ -1,26 +1,6 @@
 import { HideCommands } from './types';
 
 /**
- * Check if the separator needs to be hidden
- * @param children - Array of child elements
- * @param startIndex - Start index
- * @param endIndex - End index
- * @returns Whether the separator should be hidden
- */
-function shouldHideSeparator(
-  children: Element[],
-  startIndex: number,
-  endIndex: number
-): boolean {
-  for (let i = startIndex + 1; i < endIndex; i++) {
-    if (!children[i].classList.contains('custom-menu-hide-item')) {
-      return false;
-    }
-  }
-  return true;
-}
-
-/**
  * Calculate the display position of the menu
  * @param clickX - X coordinate of the click
  * @param clickY - Y coordinate of the click
@@ -100,49 +80,46 @@ export function hideMenuItems(
 
   if (plainTexts.length === 0 && regexTexts.length === 0) return;
 
-  // Tracks whether any non-hidden non-separator items
-  // have occured since the last separator.
-  let anyVisibleItemsSinceLastSeparator = false;
-  let lastSeparator: Element | null = null;
+  const children = Array.from(menuContainer.children);
 
-  // Handle menu items and separators hiding logic
-  const visitChildrenOf = (container: Element) => {
-    const children = Array.from(container.children);
-    const totalChildren = children.length;
-
-    children.forEach((child) => {
-      if (child.classList.contains('menu-item')) {
-        const titleElement = child.querySelector('.menu-item-title');
+  // hide menu items, hide menu separator if previous menu group is hidden
+  let all_menu_items_hidden = true;
+  children.forEach((menu_group_or_separator_element) => {
+    if (menu_group_or_separator_element.classList.contains('menu-group')) {
+      all_menu_items_hidden = true;
+      const menu_items = Array.from(menu_group_or_separator_element.children);
+      menu_items.forEach((menu_item) => {
+        const titleElement = menu_item.querySelector('.menu-item-title');
         const title = titleElement?.textContent?.trim();
         if (!title) return;
-
-        const shouldHide =
-          plainTexts.includes(title) ||
-          regexTexts.some((regex) => regex.test(title));
-        if (shouldHide) {
-          child.classList.add('custom-menu-hide-item');
-        } else {
-          anyVisibleItemsSinceLastSeparator = true;
+        if (plainTexts.includes(title) || regexTexts.some((regex) => regex.test(title))) {
+          menu_item.classList.add('custom-menu-hide-item');
+        }else{
+          all_menu_items_hidden = false;
         }
-      } else if (child.classList.contains('menu-separator')) {
-        if (anyVisibleItemsSinceLastSeparator) {
-          anyVisibleItemsSinceLastSeparator = false;
-        } else {
-          child.classList.add('custom-menu-hide-separator');
-        }
-        lastSeparator = child;
-      } else if (child.classList.contains("menu-group")) {
-        visitChildrenOf(child);
+      });
+      if (all_menu_items_hidden) {
+        menu_group_or_separator_element.classList.add('custom-menu-hide-group');
       }
-    });
-  }
+    }else if(menu_group_or_separator_element.classList.contains('menu-separator')){
+      if (all_menu_items_hidden) {
+        menu_group_or_separator_element.classList.add('custom-menu-hide-separator');
+      }
+    }
+  });
 
-  // Handle the last separator
-  if (!anyVisibleItemsSinceLastSeparator && lastSeparator) {
-    lastSeparator.classList.add('custom-menu-hide-separator');
-  }
-
-  visitChildrenOf(menuContainer);
+  // hide tail menu separator
+  children.reverse().some((menu_group_or_separator_element) => {
+    if (menu_group_or_separator_element.classList.contains('menu-separator')) {
+      if(all_menu_items_hidden){
+        menu_group_or_separator_element.classList.add('custom-menu-hide-separator');
+      }else{
+        return true;
+      }
+    }else if(menu_group_or_separator_element.classList.contains('menu-group') ){
+      all_menu_items_hidden = menu_group_or_separator_element.classList.contains('custom-menu-hide-group');
+    }
+  });
 
   // Calculate menu position and set styles
   const { offsetHeight: menuHeight, offsetWidth: menuWidth } = menu;
